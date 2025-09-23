@@ -25,4 +25,20 @@ public class CategorieDAO {
         categorieRepository.save(categorie);
     }
 
+    public Iterable<Categorie> getAllCategories(){
+        return categorieRepository.findAll();
+    }
+
+    public void deleteCategorie(Long categorie_id){
+        if(categorieRepository.existsById(categorie_id)){
+            categorieRepository.deleteById(categorie_id);
+        } else {
+            System.out.println("Categorie bestaat niet");
+        }
+    }
+
+    public void updateCategorie(Categorie categorie){
+        categorieRepository.save(categorie);
+    }
+
 }

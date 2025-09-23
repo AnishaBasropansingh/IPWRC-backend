@@ -22,15 +22,15 @@ public class Categorie {
     @Id
     @GeneratedValue
     private long categorie_id;
-    private String naam;
+    private String name;
 
 
     @JsonBackReference
     @OneToMany(mappedBy = "categorie")
-    private List<Product> producten;
+    private List<Product> products;
 
-    public Categorie(String naam) {
-        this.naam = naam;
+    public Categorie(String name) {
+        this.name = name;
     }
 
 }
