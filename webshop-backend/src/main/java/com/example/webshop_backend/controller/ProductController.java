@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +47,14 @@ class ProductController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable(name = "id") Long product_id) {
+        Optional<Product> product = productDAO.getProductById(product_id);
+        return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<Product> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO, Principal principal) {
         Optional<Product> existingProduct = this.productDAO.getProductById(product_id);
         if (existingProduct.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -62,6 +69,8 @@ class ProductController {
         pr.setProduct_id(existingProduct.get().getProduct_id());
 
         this.productDAO.updateProduct(pr);
+
+        System.out.println(principal.getName());
         return ResponseEntity.ok(pr);
     }
 }

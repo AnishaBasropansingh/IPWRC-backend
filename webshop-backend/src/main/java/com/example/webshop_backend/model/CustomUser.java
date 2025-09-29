@@ -16,12 +16,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class CustomUser {
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String username;
 
     @Column(nullable = false)
@@ -29,10 +29,15 @@ public class User {
     private String email;
     private String role; // voor de adminpanel (admin, user)
 
-    public User(String username, String password, String email, String role) {
+    public CustomUser(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public CustomUser(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 }

@@ -24,7 +24,7 @@ public class Order {
     private double totalPrice;
 
     @ManyToOne
-    private User user;
+    private CustomUser customUser;
 
     @ManyToMany
     @JoinTable(
@@ -34,10 +34,10 @@ public class Order {
     )
     private List<Product> products;
 
-    public Order(LocalDateTime orderDate, double totalPrice, User user, List<Product> products){
+    public Order(LocalDateTime orderDate, double totalPrice, CustomUser customUser, List<Product> products){
         this.orderDate = orderDate;
         this.totalPrice = totalPrice;
-        this.user = user;
+        this.customUser = customUser;
         this.products = products;
     }
 }
