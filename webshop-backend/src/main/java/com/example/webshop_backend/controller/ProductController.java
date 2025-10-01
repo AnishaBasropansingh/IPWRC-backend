@@ -8,6 +8,8 @@ import com.example.webshop_backend.model.Product;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -70,7 +72,6 @@ class ProductController {
 
         this.productDAO.updateProduct(pr);
 
-        System.out.println(principal.getName());
         return ResponseEntity.ok(pr);
     }
 }

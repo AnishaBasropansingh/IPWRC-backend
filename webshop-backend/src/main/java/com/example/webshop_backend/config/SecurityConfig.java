@@ -37,7 +37,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/error").anonymous()
+                        .requestMatchers("/product").permitAll()
+                        .requestMatchers("/categorie").permitAll()
+                        .requestMatchers("/order").permitAll()
                         .anyRequest().authenticated()
+
+                        // order niet veilig, moet wel veilig zijn
                 )
                 .build();
     }

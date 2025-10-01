@@ -4,6 +4,7 @@ import com.example.webshop_backend.config.JWTUtil;
 import com.example.webshop_backend.dao.UserRepository;
 import com.example.webshop_backend.dto.AuthenticationDTO;
 import com.example.webshop_backend.dto.LoginResponse;
+import com.example.webshop_backend.dto.UserDTO;
 import com.example.webshop_backend.model.CustomUser;
 import com.example.webshop_backend.service.CredentialValidator;
 
@@ -36,29 +37,29 @@ class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody AuthenticationDTO authenticationDTO) {
-        if (!validator.isValidEmail(authenticationDTO.email)) {
+    public ResponseEntity<LoginResponse> register(@RequestBody UserDTO userDTO) {
+        if (!validator.isValidEmail(userDTO.email)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "No valid email provided"
             );
         }
 
-        if (!validator.isValidPassword(authenticationDTO.password)) {
+        if (!validator.isValidPassword(userDTO.password)) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "No valid password provided"
             );
         }
 
-        CustomUser customUser = userDAO.findByEmail(authenticationDTO.email);
+        CustomUser customUser = userDAO.findByEmail(userDTO.email);
 
         if (customUser != null){
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Can not register with this email"
             );
         }
-        String encodedPassword = passwordEncoder.encode(authenticationDTO.password);
+        String encodedPassword = passwordEncoder.encode(userDTO.password);
 
-        CustomUser registerdCustomCustomUser = new CustomUser(authenticationDTO.email, encodedPassword);
+        CustomUser registerdCustomCustomUser = new CustomUser(userDTO.username, userDTO.email, encodedPassword, "USER");
         userDAO.save(registerdCustomCustomUser);
         String token = jwtUtil.generateToken(registerdCustomCustomUser.getEmail());
         LoginResponse loginResponse = new LoginResponse(registerdCustomCustomUser.getEmail(), token);
