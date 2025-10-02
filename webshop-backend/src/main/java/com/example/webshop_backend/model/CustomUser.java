@@ -29,10 +29,10 @@ public class CustomUser {
     private String email;
     private String role; // voor de adminpanel (admin, user)
 
-    public CustomUser(String username, String password, String email, String role) {
+    public CustomUser(String username, String email, String password, String role) {
         this.username = username;
-        this.password = password;
         this.email = email;
+        this.password = password;
         this.role = role;
     }
 
