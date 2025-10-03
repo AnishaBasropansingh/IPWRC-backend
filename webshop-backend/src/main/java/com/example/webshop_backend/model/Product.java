@@ -1,5 +1,6 @@
 package com.example.webshop_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,6 +26,7 @@ public class Product {
     private double price;
     private int stock;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "products")
     private List<Order> order;
 

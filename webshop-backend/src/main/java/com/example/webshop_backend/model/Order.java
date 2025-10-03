@@ -1,5 +1,6 @@
 package com.example.webshop_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Order {
     @ManyToOne
     private CustomUser customUser;
 
+    @JsonManagedReference
     @ManyToMany
     @JoinTable(
             name = "order_products",
