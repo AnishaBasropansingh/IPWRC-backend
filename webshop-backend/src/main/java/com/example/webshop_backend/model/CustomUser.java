@@ -1,14 +1,13 @@
 package com.example.webshop_backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -27,13 +26,16 @@ public class CustomUser {
     @Column(nullable = false)
     private String password;
     private String email;
-    private String role; // voor de adminpanel (admin, user)
 
-    public CustomUser(String username, String email, String password, String role) {
+    @JsonBackReference
+    @ManyToOne
+    private Role role_id; // voor de adminpanel (admin, user)
+
+    public CustomUser(String username, String email, String password, Role role_id) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role = role;
+        this.role_id = role_id;
     }
 
     public CustomUser(String email, String password) {

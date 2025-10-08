@@ -1,5 +1,6 @@
 package com.example.webshop_backend.service;
 
+import com.example.webshop_backend.dao.RoleRepository;
 import com.example.webshop_backend.dao.UserRepository;
 
 import com.example.webshop_backend.model.CustomUser;
@@ -15,9 +16,11 @@ import java.util.Collections;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private RoleRepository roleRepository;
 
-    public UserService(UserRepository userDAO) {
+    public UserService(UserRepository userDAO, RoleRepository roleRepository) {
         this.userRepository = userDAO;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -27,5 +30,6 @@ public class UserService implements UserDetailsService {
                 customUser.getEmail(),
                 customUser.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+
     }
 }
