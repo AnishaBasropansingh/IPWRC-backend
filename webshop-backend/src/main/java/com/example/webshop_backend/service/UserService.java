@@ -26,10 +26,12 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         CustomUser customUser = userRepository.findByEmail(email);
+        System.out.println(customUser.getRole().toString());
+        System.out.println();
         return new User(
                 customUser.getEmail(),
                 customUser.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
-
+                Collections.singletonList(new SimpleGrantedAuthority(customUser.getRole().getName().toString()))
+        );
     }
 }

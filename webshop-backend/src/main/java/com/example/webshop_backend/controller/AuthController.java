@@ -70,7 +70,7 @@ class AuthController {
         }
         String encodedPassword = passwordEncoder.encode(userDTO.password);
 
-        Role userRole = roleRepository.findByName(RoleEnum.USER)
+        Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Default role not found"));
 
         CustomUser registerdCustomCustomUser = new CustomUser(userDTO.username, userDTO.email, encodedPassword, userRole);
@@ -114,7 +114,7 @@ class AuthController {
                         user.getId(),
                         user.getUsername(),
                         user.getEmail(),
-                        user.getRole_id().getName().toString()
+                        user.getRole().getName().toString()
                 ));
             }
         }

@@ -6,6 +6,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
+import com.example.webshop_backend.model.Role;
+import com.example.webshop_backend.model.RoleEnum;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

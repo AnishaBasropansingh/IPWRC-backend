@@ -6,6 +6,7 @@ import com.example.webshop_backend.dto.OrderDTO;
 import com.example.webshop_backend.model.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +30,16 @@ class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Iterable<Order>> getAllOrders() {
         List<Order> orders = (List<Order>) this.orderDAO.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
+    // CHECK dat de ingelogde user bij zijn orders kan
+    // if isempty moet HIER OOK NOG
     public ResponseEntity<Order> getOrderById(@PathVariable(name = "id") Long order_id) {
         Optional<Order> order = this.orderDAO.getOrderById(order_id);
         return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());

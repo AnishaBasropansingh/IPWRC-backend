@@ -29,13 +29,13 @@ public class CustomUser {
 
     @JsonBackReference
     @ManyToOne
-    private Role role_id; // voor de adminpanel (admin, user)
+    private Role role; // voor de adminpanel (admin, user)
 
-    public CustomUser(String username, String email, String password, Role role_id) {
+    public CustomUser(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.role_id = role_id;
+        this.role = role;
     }
 
     public CustomUser(String email, String password) {

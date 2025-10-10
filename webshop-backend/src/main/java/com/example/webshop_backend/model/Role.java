@@ -39,6 +39,6 @@ public class Role {
     private Date updatedAt;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "role_id")
+    @OneToMany(mappedBy = "role")
     private List<CustomUser> customUser;
 }
