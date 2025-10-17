@@ -6,8 +6,8 @@ import com.example.webshop_backend.dto.CategorieDTO;
 import com.example.webshop_backend.model.Categorie;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/categorie")
 class CategorieController {
     private ProductDAO productDAO;
@@ -25,13 +26,15 @@ class CategorieController {
         this.categorieDAO = categorieDAO;
     }
 
-    @PostMapping
+    @PostMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> createCategorie(@RequestBody CategorieDTO categorieDTO){
         this.categorieDAO.createCategorie(categorieDTO);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCategorie(@PathVariable(name = "id") Long categorie_id){
         try{
             categorieDAO.deleteCategorie(categorie_id);
@@ -47,7 +50,8 @@ class CategorieController {
         return ResponseEntity.ok(categorieList);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/admin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Categorie> updateCategorie(@PathVariable(name = "id") Long categorie_id, @RequestBody CategorieDTO categorieDTO){
         Optional<Categorie> existingCategorie = this.categorieDAO.getCategorieById(categorie_id);
         if(existingCategorie.isEmpty()){

@@ -2,14 +2,12 @@ package com.example.webshop_backend.controller;
 
 import com.example.webshop_backend.config.JWTUtil;
 import com.example.webshop_backend.dao.RoleRepository;
-import com.example.webshop_backend.dao.UserDAO;
 import com.example.webshop_backend.dao.UserRepository;
 import com.example.webshop_backend.dto.AuthenticationDTO;
 import com.example.webshop_backend.dto.LoginResponse;
 import com.example.webshop_backend.dto.UserDTO;
 import com.example.webshop_backend.dto.UserInfoResponse;
 import com.example.webshop_backend.model.CustomUser;
-import com.example.webshop_backend.model.Product;
 import com.example.webshop_backend.model.Role;
 import com.example.webshop_backend.model.RoleEnum;
 import com.example.webshop_backend.service.CredentialValidator;
@@ -22,9 +20,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -81,7 +76,7 @@ class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody AuthenticationDTO body) {
+    public ResponseEntity<UserInfoResponse> login(@RequestBody AuthenticationDTO body) {
         try {
             UsernamePasswordAuthenticationToken authInputToken =
                     new UsernamePasswordAuthenticationToken(body.email, body.password);
@@ -91,9 +86,9 @@ class AuthController {
             String token = jwtUtil.generateToken(body.email);
 
             CustomUser customUser = userDAO.findByEmail(body.email);
-            LoginResponse loginResponse = new LoginResponse(customUser.getEmail(), token);
+            UserInfoResponse userInfoResponse = new UserInfoResponse(customUser.getId(), customUser.getEmail(), token, customUser.getRole().getName().toString());
 
-            return ResponseEntity.ok(loginResponse);
+            return ResponseEntity.ok(userInfoResponse);
 
         } catch (AuthenticationException authExc) {
             throw new ResponseStatusException(

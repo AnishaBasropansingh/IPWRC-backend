@@ -5,11 +5,9 @@ import com.example.webshop_backend.dao.ProductDAO;
 import com.example.webshop_backend.dao.UserDAO;
 import com.example.webshop_backend.dto.ProductDTO;
 import com.example.webshop_backend.model.Categorie;
-import com.example.webshop_backend.model.CustomUser;
 import com.example.webshop_backend.model.Product;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/product")
 class ProductController {
     private ProductDAO productDAO;

@@ -1,5 +1,6 @@
 package com.example.webshop_backend.dto;
 
+
 public class LoginResponse {
     public String email;
     public String token;
