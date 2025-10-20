@@ -14,7 +14,6 @@ import com.example.webshop_backend.service.CredentialValidator;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -100,33 +99,6 @@ class AuthController {
         }
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<UserInfoResponse> login(@RequestBody AuthenticationDTO body) {
-//        try {
-//            UsernamePasswordAuthenticationToken authInputToken =
-//                    new UsernamePasswordAuthenticationToken(body.email, body.password);
-//
-//            authManager.authenticate(authInputToken);
-//
-//            CustomUser customUser = userDAO.findByEmail(body.email);
-//            String token = jwtUtil.generateToken(customUser.getEmail(), customUser.getRole().getName().toString());
-//
-//            UserInfoResponse userInfoResponse = new UserInfoResponse(
-//                    customUser.getId(),
-//                    customUser.getEmail(),
-//                    token,
-//                    customUser.getRole().getName().toString()
-//            );
-//
-//            return ResponseEntity.ok(userInfoResponse);
-//
-//        } catch (AuthenticationException authExc) {
-//            throw new ResponseStatusException(
-//                    HttpStatus.FORBIDDEN, "No valid credentials"
-//            );
-//        }
-//    }
-
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -139,7 +111,7 @@ class AuthController {
                         user.getId(),
                         user.getUsername(),
                         user.getEmail(),
-                        "ROLE_ADMIN"
+                        user.getRole().getName().toString()
                 ));
             }
         }

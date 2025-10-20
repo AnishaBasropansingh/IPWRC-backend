@@ -13,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,6 @@ import java.util.Optional;
 class ProductController {
     private ProductDAO productDAO;
     private CategorieDAO categorieDAO;
-    private UserDAO userDAO;
 
     public ProductController(ProductDAO productDAO, CategorieDAO categorieDAO) {
         this.productDAO = productDAO;
@@ -60,30 +58,9 @@ class ProductController {
         return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-//    @PutMapping("/admin/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
-//    public ResponseEntity<?> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO, Principal principal) {
-//        Optional<Product> existingProduct = this.productDAO.getProductById(product_id);
-//        if (existingProduct.isEmpty()) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-//        }
-//
-//        Optional<Categorie> categorie = this.categorieDAO.getCategorieById(productDTO.categorie_id);
-//        if (categorie.isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "categorie niet gevonden");
-//        }
-//
-//        Product pr = new Product(productDTO.name, productDTO.description, productDTO.price, productDTO.stock, categorie.get());
-//        pr.setProduct_id(existingProduct.get().getProduct_id());
-//
-//        this.productDAO.updateProduct(pr);
-//
-//        return ResponseEntity.ok(pr);
-//    }
-
     @PutMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO, Principal principal) {
+    public ResponseEntity<?> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO) {
         Optional<Product> existingProductOpt = this.productDAO.getProductById(product_id);
         if (existingProductOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

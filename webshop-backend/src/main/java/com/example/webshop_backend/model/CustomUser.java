@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
-
 @Entity
 @Table(name = "users")
 @Getter
@@ -29,17 +27,12 @@ public class CustomUser {
 
     @JsonBackReference
     @ManyToOne
-    private Role role; // voor de adminpanel (admin, user)
+    private Role role;
 
     public CustomUser(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
-    }
-
-    public CustomUser(String email, String password) {
-        this.email = email;
-        this.password = password;
     }
 }

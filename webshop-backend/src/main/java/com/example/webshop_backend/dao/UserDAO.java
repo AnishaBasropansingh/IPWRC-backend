@@ -16,8 +16,4 @@ public class UserDAO {
     public Optional<CustomUser> loadUserById(Long user_id){
         return userRepository.findById(user_id);
     }
-
-//    public Optional<UserInfoResponse> loadRoleById(Long role_id){
-//        return userRepository.findById(role_id);
-//    }
 }
