@@ -60,24 +60,51 @@ class ProductController {
         return product.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+//    @PutMapping("/admin/{id}")
+//    @PreAuthorize("hasRole('ADMIN')")
+//    public ResponseEntity<?> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO, Principal principal) {
+//        Optional<Product> existingProduct = this.productDAO.getProductById(product_id);
+//        if (existingProduct.isEmpty()) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//
+//        Optional<Categorie> categorie = this.categorieDAO.getCategorieById(productDTO.categorie_id);
+//        if (categorie.isEmpty()) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "categorie niet gevonden");
+//        }
+//
+//        Product pr = new Product(productDTO.name, productDTO.description, productDTO.price, productDTO.stock, categorie.get());
+//        pr.setProduct_id(existingProduct.get().getProduct_id());
+//
+//        this.productDAO.updateProduct(pr);
+//
+//        return ResponseEntity.ok(pr);
+//    }
+
     @PutMapping("/admin/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateProduct(@PathVariable(name = "id") Long product_id, @RequestBody ProductDTO productDTO, Principal principal) {
-        Optional<Product> existingProduct = this.productDAO.getProductById(product_id);
-        if (existingProduct.isEmpty()) {
+        Optional<Product> existingProductOpt = this.productDAO.getProductById(product_id);
+        if (existingProductOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        Optional<Categorie> categorie = this.categorieDAO.getCategorieById(productDTO.categorie_id);
-        if (categorie.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "categorie niet gevonden");
+        Optional<Categorie> categorieOpt = this.categorieDAO.getCategorieById(productDTO.categorie_id);
+        if (categorieOpt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Categorie niet gevonden");
         }
+        Categorie categorie = categorieOpt.get();
 
-        Product pr = new Product(productDTO.name, productDTO.description, productDTO.price, productDTO.stock, categorie.get());
-        pr.setProduct_id(existingProduct.get().getProduct_id());
+        Product existingProduct = existingProductOpt.get();
+        existingProduct.setName(productDTO.name);
+        existingProduct.setDescription(productDTO.description);
+        existingProduct.setPrice(productDTO.price);
+        existingProduct.setStock(productDTO.stock);
+        existingProduct.setCategorie(categorie);
 
-        this.productDAO.updateProduct(pr);
+        this.productDAO.updateProduct(existingProduct);
 
-        return ResponseEntity.ok(pr);
+        return ResponseEntity.ok(existingProduct);
     }
+
 }

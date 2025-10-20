@@ -43,7 +43,7 @@ public class OrderDAO {
     }
 
     public Optional<Order> getOrderById(Long order_id){
-        //check
+        //check of het de order is van de user
         return orderRepository.findById(order_id);
     }
 }

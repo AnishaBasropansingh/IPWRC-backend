@@ -20,15 +20,16 @@ public class JWTUtil {
     private String secret;
 
     public String generateToken(String email) throws IllegalArgumentException, JWTCreationException {
-
         return JWT.create()
                 .withSubject("User Details")
                 .withClaim("email", email)
+//                .withClaim("roles", role)
                 .withIssuedAt(new Date())
                 .withExpiresAt(this.createExpirationDate())
                 .withIssuer("Anisha")
                 .sign(Algorithm.HMAC256(secret));
     }
+
 
     public String validateTokenAndRetrieveSubject(String token) throws JWTVerificationException {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret))

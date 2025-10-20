@@ -14,6 +14,7 @@ import com.example.webshop_backend.service.CredentialValidator;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -70,6 +71,7 @@ class AuthController {
 
         CustomUser registerdCustomCustomUser = new CustomUser(userDTO.username, userDTO.email, encodedPassword, userRole);
         userDAO.save(registerdCustomCustomUser);
+        System.out.println(userRole.toString());
         String token = jwtUtil.generateToken(registerdCustomCustomUser.getEmail());
         LoginResponse loginResponse = new LoginResponse(registerdCustomCustomUser.getEmail(), token);
         return ResponseEntity.ok(loginResponse);
@@ -86,6 +88,7 @@ class AuthController {
             String token = jwtUtil.generateToken(body.email);
 
             CustomUser customUser = userDAO.findByEmail(body.email);
+
             UserInfoResponse userInfoResponse = new UserInfoResponse(customUser.getId(), customUser.getEmail(), token, customUser.getRole().getName().toString());
 
             return ResponseEntity.ok(userInfoResponse);
@@ -96,6 +99,33 @@ class AuthController {
             );
         }
     }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<UserInfoResponse> login(@RequestBody AuthenticationDTO body) {
+//        try {
+//            UsernamePasswordAuthenticationToken authInputToken =
+//                    new UsernamePasswordAuthenticationToken(body.email, body.password);
+//
+//            authManager.authenticate(authInputToken);
+//
+//            CustomUser customUser = userDAO.findByEmail(body.email);
+//            String token = jwtUtil.generateToken(customUser.getEmail(), customUser.getRole().getName().toString());
+//
+//            UserInfoResponse userInfoResponse = new UserInfoResponse(
+//                    customUser.getId(),
+//                    customUser.getEmail(),
+//                    token,
+//                    customUser.getRole().getName().toString()
+//            );
+//
+//            return ResponseEntity.ok(userInfoResponse);
+//
+//        } catch (AuthenticationException authExc) {
+//            throw new ResponseStatusException(
+//                    HttpStatus.FORBIDDEN, "No valid credentials"
+//            );
+//        }
+//    }
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
@@ -109,7 +139,7 @@ class AuthController {
                         user.getId(),
                         user.getUsername(),
                         user.getEmail(),
-                        user.getRole().getName().toString()
+                        "ROLE_ADMIN"
                 ));
             }
         }

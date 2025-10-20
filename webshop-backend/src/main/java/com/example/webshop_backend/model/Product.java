@@ -34,6 +34,8 @@ public class Product {
     @ManyToOne
     private Categorie categorie;
 
+    private String image;
+
     public Product(String name, String description, double price, int stock, Categorie categorie){
         this.name = name;
         this.description = description;

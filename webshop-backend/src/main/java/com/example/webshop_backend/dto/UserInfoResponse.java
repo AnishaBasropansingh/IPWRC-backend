@@ -6,7 +6,7 @@ public class UserInfoResponse {
     public String token;
     public String role;
 
-    public UserInfoResponse(Long id, String email, String token, String role) {
+    public UserInfoResponse(Long id, String email, String token,  String role) {
         this.id = id;
         this.email = email;
         this.token = token;
