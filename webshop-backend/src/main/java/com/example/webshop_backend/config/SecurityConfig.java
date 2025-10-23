@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/product", "/product/**").permitAll()
                         .requestMatchers("/categorie").permitAll()
                         .requestMatchers("/user/**").permitAll()
-                        .requestMatchers("/order").hasRole("USER")
+                        .requestMatchers("/order").permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();

@@ -88,7 +88,7 @@ class AuthController {
 
             CustomUser customUser = userDAO.findByEmail(body.email);
 
-            UserInfoResponse userInfoResponse = new UserInfoResponse(customUser.getId(), customUser.getEmail(), token, customUser.getRole().getName().toString());
+            UserInfoResponse userInfoResponse = new UserInfoResponse(customUser.getId(), customUser.getUsername(), customUser.getEmail(), token, customUser.getRole().getName().toString());
 
             return ResponseEntity.ok(userInfoResponse);
 
@@ -111,6 +111,7 @@ class AuthController {
                         user.getId(),
                         user.getUsername(),
                         user.getEmail(),
+                        token,
                         user.getRole().getName().toString()
                 ));
             }

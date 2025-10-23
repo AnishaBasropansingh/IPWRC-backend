@@ -44,16 +44,16 @@ public class ProductSeeder implements CommandLineRunner {
                     .orElseThrow(() -> new RuntimeException("Categorie Manga niet gevonden"));
 
             // seeder minimaal 10 producten
-            Product p1 = new Product("Anime Hoodie", "Zwarte hoodie met print", 29.99, 10, merch);
-            Product p2 = new Product("T-shirt Giyuu", "Officieel T-shirt", 19.99, 15, merch);
-            Product p3 = new Product("Jujutsu Kaisen Gojo Figuur", "Daddy's Home", 49.99, 5, figueren);
+            Product p1 = new Product("Anime Hoodie", "Zwarte hoodie met print", 29.99, 50, merch);
+            Product p2 = new Product("T-shirt Giyuu", "Officieel T-shirt", 19.99, 50, merch);
+            Product p3 = new Product("Jujutsu Kaisen Gojo Figuur", "Daddy's Home", 49.99, 50, figueren);
             Product p4 = new Product("One Piece Luffy Figuur", "Limited Edition", 59.99, 3, figueren);
-            Product p5 = new Product("Haikyuu!! Vol.1", "Manga eerste volume", 9.99, 20, manga);
-            Product p6 = new Product("Attack on Titan Vol.1", "Manga eerste volume", 10.99, 18, manga);
-            Product p7 = new Product("Demon Slayer Poster", "Full color poster", 7.99, 30, merch);
-            Product p8 = new Product("My Hero Academia Figuur.", "Collectible figuur", 39.99, 7, figueren);
-            Product p9 = new Product("Fairy Tail Vol.3", "Manga volume 3", 11.99, 12, manga);
-            Product p10 = new Product("Anime Socks", "Set van 3 paar sokken", 14.99, 25, merch);
+            Product p5 = new Product("Haikyuu!! Vol.1", "Manga eerste volume", 9.99, 50, manga);
+            Product p6 = new Product("Attack on Titan Vol.1", "Manga eerste volume", 10.99, 50, manga);
+            Product p7 = new Product("Demon Slayer Poster", "Full color poster", 7.99, 50, merch);
+            Product p8 = new Product("My Hero Academia Figuur.", "Collectible figuur", 39.99, 50, figueren);
+            Product p9 = new Product("Fairy Tail Vol.3", "Manga volume 3", 11.99, 50, manga);
+            Product p10 = new Product("Anime Socks", "Set van 3 paar sokken", 14.99, 50, merch);
 
             productRepository.save(p1);
             productRepository.save(p2);

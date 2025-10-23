@@ -43,8 +43,14 @@ public class OrderDAO {
     }
 
     public Optional<Order> getOrderById(Long order_id){
-        //check of het de order is van de user
         return orderRepository.findById(order_id);
     }
+
+    public List<Order> findByCustomUserEmail(String email) {
+        return orderRepository.findByCustomUserEmail(email);
+    }
+
+
+
 }
 
