@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk-jammy as builder
 WORKDIR /opt/app
-COPY webshop-backend/.mvn/ .mvn
+COPY webshop-backend/.mvn/ ./.mvn/
 COPY webshop-backend/mvnw webshop-backend/pom.xml ./
 RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline
