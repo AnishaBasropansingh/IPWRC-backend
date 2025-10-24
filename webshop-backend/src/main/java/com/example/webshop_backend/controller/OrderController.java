@@ -38,15 +38,12 @@ class OrderController {
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> getAllOrders(Authentication authentication) {
         String loggedInUsername = authentication.getName();
-        System.out.println("Logged in user: " + loggedInUsername);
 
         List<String> roles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
-        System.out.println("Roles: " + roles);
 
         boolean isAdmin = roles.contains("ROLE_ADMIN");
-        System.out.println("Is admin? " + isAdmin);
 
         List<Order> orders;
 

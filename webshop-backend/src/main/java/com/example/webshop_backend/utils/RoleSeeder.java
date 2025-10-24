@@ -65,7 +65,6 @@ public class RoleSeeder implements ApplicationListener<ContextRefreshedEvent> {
                         roleToCreate.setName(roleEnum);
                         roleToCreate.setDescription(roleDescriptions.get(roleEnum));
                         roleRepository.save(roleToCreate);
-                        System.out.println("Aangemaakt: " + roleToCreate);
                     }
             );
         });
